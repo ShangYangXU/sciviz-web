@@ -1651,7 +1651,7 @@ async function cmdVerify(mods, args) {
         fixture: f.id,
         what: f.what,
         skipped: true,
-        reason: '这个宿主没有 torch（装的是 CPU-only 或没装）—— 这条夹具压的是宿主专属算子',
+        reason: '这个宿主未安装 torch，训练夹具未执行',
         cells: [],
       })
       continue
@@ -1749,7 +1749,7 @@ async function cmdVerify(mods, args) {
     results.push({ fixture: f.id, what: f.what, dir, ok: cells.every((c) => c.ok), cells })
   }
 
-  const failed = results.filter((r) => !r.ok)
+  const failed = results.filter((r) => !r.skipped && !r.ok)
   if (json) {
     printJson({ ok: failed.length === 0, host: url, fixtures: results })
   } else {
