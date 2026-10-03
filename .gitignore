@@ -1,0 +1,33 @@
+# 本地执行宿主的 Python 环境与安装缓存。
+# 体积太大（CUDA 版 torch 解压后 4GB+）且可由命令重建，不进 git。
+.venv/
+.pip-cache/
+.tmp/
+
+# 对话与源码闸门的本地审计状态（不进入工程内容、指纹或提交）。
+.sciviz-state/
+
+# 训练产物（权重、meta）。可以重建，而且可能很大；默认落在仓库旁边，
+# 让用户找得到它（见 sciviz-local/sciviz_host/session.py 的 artifact_root）
+.artifacts/
+
+# 桌面壳打出来的应用代码包（约 0.3MB，可随时重打）
+sciviz-desk/out/
+
+# 无头运行的产物（run.json / report.md / 索引）。默认落在 `sciviz-web/runs/`，
+# 每次 `sciviz run` 都会新建一个目录 —— 它是"这次跑出来什么"，不是源码。
+# 审计靠 git（工程文件是文本），运行产物靠重建。
+sciviz-web/runs/
+
+# 本机数据、临时导入与诊断产物。
+sciviz-web/public/samples/*.csv
+sciviz-web/public/__codex_*
+debug_outputs/
+
+# 凭据及本机环境配置；公开的模板使用 .env.example。
+.env
+.env.*
+!.env.example
+agent-providers.json
+agent-providers.json.*
+.providers-*.tmp

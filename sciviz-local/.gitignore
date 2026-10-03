@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+.pytest_cache/
+# 训练产物与运行清单属于用户数据，不进 git
+runs/
+

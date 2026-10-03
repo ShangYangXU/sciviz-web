@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "maxBytes": 1048576,
+  "readRoots": [""],
+  "writeRoots": [
+    ""
+  ],
+  "allowedFiles": [
+    "AGENTS.md",
+    "README.md",
+    "requirements.txt",
+    "requirements.lock.txt",
+    "package.json",
+    "tsconfig.json",
+    "config/code-path-policy.json"
+  ],
+  "deniedSegments": [
+    ".git",
+    ".venv",
+    "node_modules",
+    "dist",
+    "pyodide",
+    "public/pyodide",
+    ".artifacts",
+    "runs",
+    ".sciviz-state"
+  ],
+  "deniedExtensions": [
+    ".pem",
+    ".key",
+    ".p12",
+    ".exe",
+    ".dll",
+    ".so",
+    ".bin",
+    ".xlsx",
+    ".xls",
+    ".parquet",
+    ".feather",
+    ".arrow",
+    ".npz",
+    ".npy",
+    ".pt",
+    ".pth",
+    ".ckpt",
+    ".pkl",
+    ".pickle"
+  ]
+}

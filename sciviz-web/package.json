@@ -1,0 +1,47 @@
+{
+  "name": "sciviz-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "node scripts/check-layers.mjs --self-test && node scripts/check-shared-operator-deps.mjs --self-test && node scripts/check-shared-operator-deps.mjs && node scripts/check-agent-static.mjs && node scripts/check-mcp-shell.mjs && npm run chat-regression && node --import tsx --test \"src/**/*.test.ts\"",
+    "check:layers": "node scripts/check-layers.mjs --self-test",
+    "check:operators": "node scripts/check-shared-operator-deps.mjs",
+    "check:agent": "node scripts/check-agent-static.mjs",
+    "check:mcp": "node scripts/check-mcp-shell.mjs",
+    "mcp-smoke": "node --import tsx scripts/mcp-smoke.mjs",
+    "preview": "vite preview",
+    "e2e": "node scripts/e2e.mjs",
+    "e2e:headed": "node scripts/e2e.mjs --headed",
+    "chat-regression": "node --import tsx scripts/chat-regression.mjs",
+    "mcp": "node --import tsx scripts/sciviz-mcp.mjs",
+    "sciviz": "node --import tsx scripts/sciviz.mjs",
+    "verify": "node --import tsx scripts/sciviz.mjs verify",
+    "blind": "node scripts/agent-blind.mjs",
+    "sync-pyodide": "node scripts/sync-pyodide.mjs"
+  },
+  "dependencies": {
+    "@xyflow/react": "^12.11.6",
+    "d3": "^7.9.0",
+    "pdfjs-dist": "^4.10.38",
+    "pyodide": "^314.0.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "yaml": "^2.9.0",
+    "zustand": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/d3": "^7.4.3",
+    "@types/node": "^22.20.2",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "playwright-core": "^1.63.0",
+    "tsx": "^4.23.13",
+    "typescript": "^5.7.0",
+    "vite": "^6.0.0"
+  }
+}

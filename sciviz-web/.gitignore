@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.DS_Store
+*.local
+.vite/
+
+# 本地执行宿主会 import src/engine/python/ 下的算子，Python 会在那里落下字节码缓存
+__pycache__/
+*.py[cod]
+
+# Pyodide 运行时（约 40MB：核心 wasm + numpy/pandas）
+# 由 scripts/sync-pyodide.mjs 生成，不进 git
+public/pyodide/

@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "checks": {
+    "web-test": {
+      "program": "npm",
+      "args": ["test"],
+      "cwd": "sciviz-web",
+      "timeoutMs": 600000
+    },
+    "web-typecheck": {
+      "program": "npm",
+      "args": ["run", "typecheck"],
+      "cwd": "sciviz-web",
+      "timeoutMs": 600000
+    },
+    "web-build": {
+      "program": "npm",
+      "args": ["run", "build"],
+      "cwd": "sciviz-web",
+      "timeoutMs": 600000
+    },
+    "agent-blind": {
+      "program": "npm",
+      "args": ["run", "blind"],
+      "cwd": "sciviz-web",
+      "timeoutMs": 600000
+    },
+    "browser-e2e": {
+      "program": "npm",
+      "args": ["run", "e2e"],
+      "cwd": "sciviz-web",
+      "timeoutMs": 600000
+    },
+    "operator-truth": {
+      "program": "npm",
+      "args": ["run", "verify"],
+      "cwd": "sciviz-web",
+      "timeoutMs": 600000
+    },
+    "shared-operator-deps": {
+      "program": "npm",
+      "args": ["run", "check:operators"],
+      "cwd": "sciviz-web",
+      "timeoutMs": 600000
+    },
+    "host-unittest": {
+      "program": "python",
+      "args": ["-m", "unittest", "discover", "-s", "tests", "-v"],
+      "cwd": "sciviz-local",
+      "timeoutMs": 600000
+    }
+  }
+}

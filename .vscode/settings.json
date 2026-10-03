@@ -1,0 +1,18 @@
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+  "python.terminal.activateEnvironment": true,
+  "python.analysis.extraPaths": ["sciviz-local"],
+  "files.exclude": {
+    ".venv": true,
+    ".pip-cache": true,
+    ".tmp": true
+  },
+  "search.exclude": {
+    ".venv": true,
+    ".pip-cache": true,
+    ".tmp": true,
+    "sciviz-web/dist": true,
+    "sciviz-web/node_modules": true
+  }
+}
+

@@ -1,0 +1,67 @@
+# -*- coding: utf-8 -*-
+# 整个项目共用的 Python 环境清单。
+#
+# 第一行的编码声明不是装饰：pip 读 requirements 文件时按系统区域编码解码（中文
+# Windows 上是 GBK），而本文件是 UTF-8 且带中文注释 —— 没有这一行会直接
+# UnicodeDecodeError，报错还指向文件位置而不是编码，很难一眼看出。
+#
+# **只有一个环境**：仓库根目录的 .venv。别用系统 Python 跑这个项目的代码 ——
+# 系统里那份 torch 是 CPU-only 构建，会静默地跑在 CPU 上，而结果看起来完全正常。
+#
+# 用法（必须在仓库根目录执行，因为下面的 -e 是相对路径；setup-env.ps1 会自己切过去）：
+#   .\setup-env.ps1           从零重建整个环境
+#   .\setup-env.ps1 -Update   按本文件补齐/升级，不动已有的 venv
+#
+# 想加库就加在这里，然后跑 .\setup-env.ps1 -Update。
+
+# —— 宿主包本体 ——
+# 它自己的依赖写在 sciviz-local/pyproject.toml 里，其中 numpy / pandas 锁到了浏览器端
+# Pyodide 的同一版本。改动那些版本要两边一起改，否则同一张图在两个适配器上的差异里
+# 永远有一项是「库版本」，且排除不掉。
+-e ./sciviz-local
+
+# torch 刻意不在这里：CUDA 构建不在 PyPI 上，要从 PyTorch 自己的索引装。
+# 那一步由 setup-env.ps1 负责（见 sciviz-local/README.md 的 GPU 一节）。
+
+# —— 数值与统计 ——
+# 这三个锁到 Pyodide 的版本（判定依据是 node_modules/pyodide/pyodide-lock.json，
+# 也就是浏览器里那份）。它们都可能被**共享算子**用到，两边版本不同就意味着
+# "同一张图在两个客户端跑出不同结果，而原因里永远有一项排除不掉"。
+# 要升级就先升 Pyodide 那边的锁，再回来改这里，两边一起动。
+scipy==1.18.0
+scikit-learn==1.8.0
+statsmodels==0.14.6
+
+# —— 出图 ——
+# matplotlib 负责出版级静态图，前端的 D3 负责交互预览，两边靠同一份图表 spec 驱动。
+matplotlib==3.10.8
+seaborn
+
+# —— 数据格式 ——
+pyarrow        # parquet
+openpyxl       # xlsx
+h5py           # 大数组 / 训练产物
+
+# —— 交互与工程 ——
+requests
+rich           # CLI 报告的可读输出（sciviz doctor / run 的报告）
+tqdm
+joblib
+ipykernel      # 在 VS Code 的 notebook 里探查数据
+
+# —— 开发工具 ——
+pytest
+ruff
+
+# —— 按需再装 ——
+# 下面这些不属于当前项目代码要用的东西，装了只是占地方，所以不默认装。
+# 真要用到就把对应那行的注释去掉，跑 .\setup-env.ps1 -Update。
+# opencv-python    # 图像 IO 与预处理（约 40MB）
+# plotly           # 交互式图表；本项目的交互预览由前端 D3 负责，静态图归 matplotlib
+# beautifulsoup4   # 网页抓取
+# lxml             # 上面那个的解析后端
+# aiohttp          # 异步 HTTP 客户端/服务端
+# numba            # 循环的 JIT 加速
+# jupyterlab       # 完整的 notebook 界面；只写代码的话 ipykernel 已经够 VS Code 用
+# tensorboard      # 训练曲线；本项目的训练曲线直接出成表，由前端画
+# torchvision      # 图像模型；它在 PyTorch 索引上，不在 PyPI，需按 README 手动装

@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sciviz-host"
+version = "0.1.0"
+description = "SciViz 本地执行宿主：把浏览器的执行引擎换成有 GPU 的本机进程"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.110",
+  "uvicorn[standard]>=0.29",
+  # 与浏览器适配器对齐：Pyodide 侧锁定的就是这两个版本
+  # （sciviz-web/node_modules/pyodide/pyodide-lock.json）。
+  # 同一张图在两个适配器上算出不同结果时，第一件要能排除的就是库版本 ——
+  # 如果两边版本本来就不同，那就永远排除不掉。
+  "numpy==2.4.6",
+  "pandas==3.0.2",
+]
+
+[project.optional-dependencies]
+# torch 单列出来：装哪个构建（CPU / CUDA）是这台机器的决定，不是这个包的决定。
+# CUDA 构建要从 PyTorch 自己的索引装，见 README。
+gpu = ["torch>=2.2"]
+dev = ["pytest>=8"]
+
+[project.scripts]
+sciviz-host = "sciviz_host.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["sciviz_host*"]

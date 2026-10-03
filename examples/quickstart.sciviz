@@ -1,0 +1,132 @@
+# SciViz 工程文件 v1 —— 人与 agent 共用这一份
+version: 1
+projectId: 87596c86-ffb1-438b-a1d5-44bf52476446
+name: SciViz 快速开始
+description: ""
+graph:
+  nodes:
+    - id: source
+      type: data.source
+      label: 合成数据
+      params:
+        datasetId: sample
+      position:
+        x: 60
+        y: 100
+    - id: preview
+      type: data.preview
+      label: 原始数值
+      params:
+        rows: 5
+      position:
+        x: 400
+        y: 80
+    - id: chart
+      type: viz.chart
+      label: y = 2x + 1
+      params:
+        chartType: line
+        x: x
+        y: y
+        color: ""
+        palette: okabe-ito
+        pointSize: 3.5
+        showGrid: true
+        showLegend: true
+        title: ""
+      position:
+        x: 780
+        y: 80
+  edges:
+    - source: source
+      sourcePort: __table__
+      target: preview
+      targetPort: data
+    - source: preview
+      sourcePort: head
+      target: chart
+      targetPort: data
+datasets:
+  - id: sample
+    name: quickstart
+    path: quickstart.csv
+    rowCount: 5
+    columns:
+      - name: x
+        type: number
+        role: continuous
+        enabled: true
+      - name: y
+        type: number
+        role: continuous
+        enabled: true
+patches:
+  - at: 1790949780434
+    reason: 公开的合成数据示例：输入、预览、线性曲线
+    ops:
+      - op: addDataset
+        id: sample
+        name: quickstart
+        path: quickstart.csv
+        rowCount: 5
+        columns:
+          - name: x
+            type: number
+            role: feature
+            enabled: true
+          - name: y
+            type: number
+            role: feature
+            enabled: true
+      - op: addNode
+        id: source
+        type: data.source
+        label: 合成数据
+        params:
+          datasetId: sample
+        position:
+          x: 60
+          y: 100
+      - op: addNode
+        id: preview
+        type: data.preview
+        label: 原始数值
+        params:
+          rows: 5
+        position:
+          x: 400
+          y: 80
+      - op: addNode
+        id: chart
+        type: viz.chart
+        label: y = 2x + 1
+        params:
+          chartType: line
+          x: x
+          y: y
+        position:
+          x: 780
+          y: 80
+      - op: connect
+        source: source
+        sourcePort: __table__
+        target: preview
+        targetPort: data
+      - op: connect
+        source: preview
+        sourcePort: head
+        target: chart
+        targetPort: data
+    reverse:
+      - op: disconnect
+        edgeId: preview|head|chart|data
+      - op: disconnect
+        edgeId: source|__table__|preview|data
+      - op: removeNode
+        id: chart
+      - op: removeNode
+        id: preview
+      - op: removeNode
+        id: source
+      - op: removeDataset
+        id: sample
